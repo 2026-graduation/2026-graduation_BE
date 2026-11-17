@@ -89,14 +89,21 @@ spring:
 #  pattern:
 #    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level [%X{traceId}] %logger{36} - %msg%n"
 
+# 파일 저장소: s3(기본) | local(서버 로컬 디스크)
+storage:
+  type: ${STORAGE_TYPE:s3}
+  local:
+    base-dir: ${STORAGE_LOCAL_BASE_DIR:./uploads}
+    base-url: ${STORAGE_LOCAL_BASE_URL:http://localhost:8080}
+
 cloud:
   aws:
-    region: ${AWS_REGION}
+    region: ${AWS_REGION:ap-northeast-2}
     credentials:
-      access-key: ${AWS_S3_ACCESS_KEY_ID}
-      secret-key: ${AWS_S3_SECRET_ACCESS_KEY}
+      access-key: ${AWS_S3_ACCESS_KEY_ID:}
+      secret-key: ${AWS_S3_SECRET_ACCESS_KEY:}
     s3:
-      bucket: ${AWS_S3_BUCKET_NAME}
+      bucket: ${AWS_S3_BUCKET_NAME:}
 
 jwt:
   secret: ${JWT_SECRET}

@@ -3,6 +3,7 @@ package com.ssambbong.gymjjak.file.infrastructure.s3;
 import com.ssambbong.gymjjak.file.exception.FileUploadException;
 import com.ssambbong.gymjjak.file.domain.repository.FileStoragePort;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import software.amazon.awssdk.services.s3.S3Client;
@@ -17,6 +18,7 @@ import java.time.Duration;
 
 @Slf4j
 @Component
+@ConditionalOnProperty(name = "storage.type", havingValue = "s3", matchIfMissing = true)
 @RequiredArgsConstructor
 public class S3FileStorageAdapter implements FileStoragePort {
 

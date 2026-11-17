@@ -252,4 +252,4 @@ src/main/resources/db/performance-seed.sql
 /CLAUDE.md
 
 # Local Git worktrees
-.worktrees/
+.worktrees/uploads/

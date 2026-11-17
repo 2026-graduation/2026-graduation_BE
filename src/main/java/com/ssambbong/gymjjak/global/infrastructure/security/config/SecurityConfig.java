@@ -79,6 +79,9 @@ public class SecurityConfig {
                                 "/error"
                         ).permitAll()
 
+                        // 로컬 파일 저장소(storage.type=local): S3 presigned URL 대체 업로드/조회 엔드포인트
+                        .requestMatchers("/api/files/local/**").permitAll()
+
                         .requestMatchers("/api/token/reissue").permitAll()
 
                         .requestMatchers("/api/token/validate").authenticated()
