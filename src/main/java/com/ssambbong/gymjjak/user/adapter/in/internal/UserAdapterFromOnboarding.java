@@ -3,6 +3,7 @@ package com.ssambbong.gymjjak.user.adapter.in.internal;
 import com.ssambbong.gymjjak.onboarding.application.port.out.UserPortFromOnboarding;
 import com.ssambbong.gymjjak.user.adapter.out.persistence.SpringDataUserRepository;
 import com.ssambbong.gymjjak.user.adapter.out.persistence.UserJpaEntity;
+import com.ssambbong.gymjjak.user.application.port.out.UserCacheEvictionPort;
 import com.ssambbong.gymjjak.user.domain.exception.UserErrorCode;
 import com.ssambbong.gymjjak.user.domain.exception.UserException;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Component;
 public class UserAdapterFromOnboarding implements UserPortFromOnboarding {
 
     private final SpringDataUserRepository springDataUserRepository;
+    private final UserCacheEvictionPort userCacheEvictionPort;
 
     @Override
     public boolean existsById(Long userId) {
@@ -25,6 +27,19 @@ public class UserAdapterFromOnboarding implements UserPortFromOnboarding {
                 .orElseThrow(() -> new UserException(UserErrorCode.USER_NOT_FOUND));
 
         user.completeOnboarding();
+    }
+
+    @Override
+    public java.util.Optional<Long> findIdByUsername(String username) {
+        return springDataUserRepository.findByUsername(username).map(UserJpaEntity::getId);
+    }
+
+    @Override
+    public void resetOnboarding(Long userId) {
+        UserJpaEntity user = springDataUserRepository.findById(userId)
+                .orElseThrow(() -> new UserException(UserErrorCode.USER_NOT_FOUND));
+        user.resetOnboarding();
+        userCacheEvictionPort.evictUserProfile(userId);
     }
 
 }

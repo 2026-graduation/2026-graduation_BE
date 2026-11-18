@@ -123,6 +123,16 @@ public class OnboardingService implements OnboardingUsecase {
     }
 
     @Override
+    public void resetOnboardingByUsername(String username) {
+        userPortFromOnboarding.findIdByUsername(username).ifPresent(userId -> {
+            onboardingPort.deleteByUserId(userId);
+            userPortFromOnboarding.resetOnboarding(userId);
+            onboardingCacheEvictionPort.evictMyOnboarding(userId);
+            log.info("event=onboarding_reset_succeed userId={}", userId);
+        });
+    }
+
+    @Override
     public void updateOnboarding(UpdateOnboardingCommand command) {
         log.debug("event=onboarding_update_start userId={}", command.userId());
 

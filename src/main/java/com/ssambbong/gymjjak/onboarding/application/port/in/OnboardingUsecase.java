@@ -11,4 +11,7 @@ public interface OnboardingUsecase {
     MyOnboardingResult getMyOnboarding(Long userId);
 
     void updateOnboarding(UpdateOnboardingCommand command);
+
+    /** 데모 초기화용: 로그인 아이디의 온보딩 정보를 지우고 미완료 상태로 되돌린다. */
+    void resetOnboardingByUsername(String username);
 }

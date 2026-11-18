@@ -26,6 +26,18 @@ public class OnboardingAdapter implements OnboardingPort {
     private final OnboardingMapper onboardingMapper;
 
     @Override
+    public void deleteByUserId(Long userId) {
+        onboardingSurveyJpaRepository.findByUserId(userId).ifPresent(survey -> {
+            RegionJpaEntity region = survey.getPreferredRegion();
+            onboardingSurveyJpaRepository.delete(survey);
+            onboardingSurveyJpaRepository.flush();
+            if (region != null) {
+                regionJpaRepository.delete(region);
+            }
+        });
+    }
+
+    @Override
     public boolean existsByUserId(Long userId) {
         return onboardingSurveyJpaRepository.existsByUserId(userId);
     }
