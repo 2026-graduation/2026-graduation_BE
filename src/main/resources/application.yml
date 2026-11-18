@@ -124,6 +124,11 @@ app:
   oauth2:
     success-redirect-url: ${OAUTH2_SUCCESS_REDIRECT_URL}
 
+  # 시연용: 쉼표로 구분한 로그인 아이디가 로그인할 때마다 온보딩 정보를 초기화한다. 기본값은 비어 있어 동작하지 않는다.
+  demo:
+    onboarding-reset:
+      usernames: ${DEMO_ONBOARDING_RESET_USERNAMES:}
+
 #  redis:
 #    key-prefix: ${REDIS_KEY_PREFIX:gymjjak:local}
 

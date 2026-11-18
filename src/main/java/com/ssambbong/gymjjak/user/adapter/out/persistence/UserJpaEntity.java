@@ -80,6 +80,10 @@ public class UserJpaEntity extends BaseTimeEntity {
         this.onboardingCompleted = true;
     }
 
+    public void resetOnboarding() {
+        this.onboardingCompleted = false;
+    }
+
     public void markAsPaid() {
         this.paid = true;
     }

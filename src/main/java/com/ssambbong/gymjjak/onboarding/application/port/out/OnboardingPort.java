@@ -20,4 +20,7 @@ public interface OnboardingPort {
 
     Long updateOnboardingSurvey(OnboardingSurvey onboardingSurvey);
 
+    /** 데모 초기화용: 사용자의 온보딩 설문과 선호 지역을 삭제한다. */
+    void deleteByUserId(Long userId);
+
 }
